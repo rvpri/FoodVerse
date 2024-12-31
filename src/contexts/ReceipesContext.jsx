@@ -1,13 +1,32 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { useUsers } from "./UsersContext";
 
 export const ReceipesContext = createContext();
 
-function generateRandomId() {
-  return Math.floor(10000 + Math.random() * 90000);
-}
-
 function ReceipesProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
+  const { user } = useUsers();
+
+  console.log(user);
+
+  useEffect(() => {
+    const fetchReciepes = async () => {
+      try {
+        const response = await fetch("http://localhost:8001/posts");
+
+        if (!response.ok) {
+          throw new Error("Something went wrong with fetching movies");
+        }
+
+        const data = await response.json();
+        setRecipes(data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchReciepes();
+  }, []);
 
   const handleAddRecipe = (title, recipeDetail) => {
     if (!title || !recipeDetail) {
@@ -18,12 +37,31 @@ function ReceipesProvider({ children }) {
     const newRecipe = {
       title,
       recipeDetail,
-      id: generateRandomId(),
+      userId: user.id,
     };
 
+    async function addNewRecipe() {
+      try {
+        const response = await fetch("http://localhost:8001/posts", {
+          method: "POST",
+          body: JSON.stringify(newRecipe),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const json = await response.json();
+        console.log(json);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        console.log(response.ok);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+
+    addNewRecipe();
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
-    console.log("New recipe added:", newRecipe);
-    console.log("Updated recipes list:", recipes);
   };
 
   return (

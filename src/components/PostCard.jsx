@@ -8,22 +8,19 @@ import {
   Stack,
   Box,
 } from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FoodImg from "../assets/food.jpg";
-import { SavedRecipesContext } from "../contexts/SavedRecipesContext.jsx";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ recipe }) => {
-  const { id, title, recipeDetail } = recipe;
-  const { handleSaveRecipe } = useContext(SavedRecipesContext);
+  const { id, title } = recipe;
+  const navigate = useNavigate();
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    handleSaveRecipe(id);
+  const handleClick = () => {
+    navigate(`/recipe/${id}`);
   };
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
+    <Card sx={{ maxWidth: 300 }} onClick={handleClick}>
       <CardMedia
         component="img"
         height="200"
@@ -34,14 +31,8 @@ const PostCard = ({ recipe }) => {
         <Box>
           <CardContent>
             <Typography variant="h6">{title}</Typography>
-            <Typography variant="body2">{recipeDetail}</Typography>
           </CardContent>
         </Box>
-        <CardActions>
-          <IconButton aria-label="bookmark" onClick={handleSave}>
-            <BookmarkBorderIcon />
-          </IconButton>
-        </CardActions>
       </Stack>
     </Card>
   );
