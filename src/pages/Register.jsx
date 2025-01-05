@@ -1,11 +1,9 @@
-import { useState } from "react";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import { Stack, Button, TextField, Typography } from "@mui/material";
 import { useUsers } from "../contexts/UsersContext";
 import { Navbar } from "../components/navbar";
 import { useNavigate } from "react-router-dom";
+import { FormBox } from "../styles/styledComponents";
 
 const AddRecipes = () => {
   const [formData, setFormData] = useState({
@@ -76,9 +74,21 @@ const AddRecipes = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <Typography variant="h4" gutterBottom>
-          Add Recipes
+      <FormBox
+        sx={{
+          width: "400px",
+          margin: "50px auto",
+        }}
+      >
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            marginBottom: "16px",
+          }}
+        >
+          Register
         </Typography>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
@@ -129,7 +139,7 @@ const AddRecipes = () => {
             </Button>
           </Stack>
         </form>
-      </div>
+      </FormBox>
     </>
   );
 };

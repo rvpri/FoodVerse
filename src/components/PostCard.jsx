@@ -1,10 +1,8 @@
 import {
   Card,
-  IconButton,
   Typography,
   CardMedia,
   CardContent,
-  CardActions,
   Stack,
   Box,
 } from "@mui/material";
@@ -12,7 +10,7 @@ import FoodImg from "../assets/food.jpg";
 import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ recipe }) => {
-  const { id, title } = recipe;
+  const { id, title, image } = recipe;
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -20,11 +18,11 @@ const PostCard = ({ recipe }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 300 }} onClick={handleClick}>
+    <Card sx={{ width: 300 }} onClick={handleClick}>
       <CardMedia
         component="img"
         height="200"
-        image={FoodImg}
+        image={image || FoodImg}
         alt="Paella dish"
       />
       <Stack direction="row" justifyContent="space-between">

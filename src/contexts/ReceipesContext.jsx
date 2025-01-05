@@ -1,13 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useUsers } from "./UsersContext";
-
 export const ReceipesContext = createContext();
 
 function ReceipesProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const { user } = useUsers();
-
-  console.log(user);
 
   useEffect(() => {
     const fetchReciepes = async () => {
@@ -28,15 +25,11 @@ function ReceipesProvider({ children }) {
     fetchReciepes();
   }, []);
 
-  const handleAddRecipe = (title, recipeDetail) => {
-    if (!title || !recipeDetail) {
-      alert("Please fill out both fields.");
-      return;
-    }
-
+  const handleAddRecipe = async (title, recipeDetail, image) => {
     const newRecipe = {
       title,
       recipeDetail,
+      image,
       userId: user.id,
     };
 
@@ -49,8 +42,8 @@ function ReceipesProvider({ children }) {
             "Content-Type": "application/json",
           },
         });
-        const json = await response.json();
-        console.log(json);
+        const updatedRecipes = await response.json();
+        setRecipes((prevRecipes) => [...prevRecipes, updatedRecipes]);
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
@@ -61,7 +54,6 @@ function ReceipesProvider({ children }) {
     }
 
     addNewRecipe();
-    setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
   };
 
   return (

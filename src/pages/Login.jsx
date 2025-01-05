@@ -1,11 +1,9 @@
-import { useState } from "react";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import { Stack, Button, TextField } from "@mui/material";
 import { Navbar } from "../components/navbar";
 import { useUsers } from "../contexts/UsersContext";
 import { useNavigate } from "react-router-dom";
+import { CenteredTypography, FormBox } from "../styles/styledComponents";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -54,11 +52,14 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <Typography variant="h5" gutterBottom>
-          Login
-        </Typography>
-        <form onSubmit={handleSubmit}>
+      <FormBox
+        sx={{
+          width: "400px",
+          margin: "50px auto",
+        }}
+      >
+        <CenteredTypography variant="h5">Login</CenteredTypography>
+        <form onSubmit={handleSubmit} sx={{ width: "100%" }}>
           <Stack spacing={2}>
             <TextField
               label="Email"
@@ -77,31 +78,26 @@ const Login = () => {
               type="password"
               size="small"
               name="password"
+              autocomplete="current-password"
               value={formData.password}
               onChange={handleChange}
               error={!!errors.password}
               helperText={errors.password}
               required
             />
-            <Button
-              variant="contained"
-              size="small"
-              type="submit"
-              sx={{ padding: "4px 8px", fontSize: "14px" }}
-            >
+            <Button variant="contained" size="small" type="submit">
               Login
             </Button>
             <Button
               variant="contained"
               size="small"
               onClick={handleRegisterRedirect}
-              sx={{ padding: "4px 8px", fontSize: "14px" }}
             >
-              New User? SignUP
+              New User? SignUp
             </Button>
           </Stack>
         </form>
-      </div>
+      </FormBox>
     </>
   );
 };

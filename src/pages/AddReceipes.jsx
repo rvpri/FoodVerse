@@ -1,15 +1,17 @@
-import { useState, useContext } from "react";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import React, { useState, useContext } from "react";
+import { Stack, Button, TextField, Typography } from "@mui/material";
 import { ReceipesContext } from "../contexts/ReceipesContext";
 import { Navbar } from "../components/navbar";
+import ImageDropzone from "../components/ImageDropZone";
+import { FormBox } from "../styles/styledComponents";
+import { useNavigate } from "react-router-dom";
 
 const AddRecipes = () => {
   const [title, setTitle] = useState("");
   const [recipeDetail, setRecipeDetail] = useState("");
+  const [image, setImage] = useState(null);
   const { handleAddRecipe } = useContext(ReceipesContext);
+  const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -19,19 +21,52 @@ const AddRecipes = () => {
     setRecipeDetail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleAddRecipe(title, recipeDetail);
-    setTitle("");
-    setRecipeDetail("");
+    if (!title.trim() || !recipeDetail.trim() || !image) {
+      alert("All fields, including an image, are required.");
+      return;
+    }
+
+    const convertToBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    try {
+      const base64Image = await convertToBase64(image);
+      handleAddRecipe(title, recipeDetail, base64Image);
+      setTitle("");
+      setRecipeDetail("");
+      setImage(null);
+
+      navigate("/myrecipes");
+    } catch (error) {
+      console.error("Error converting image to Base64:", error);
+    }
   };
 
   return (
     <>
       <Navbar />
-      <div>
-        <Typography variant="h4" gutterBottom>
-          Add Recipes
+      <FormBox
+        sx={{
+          width: "600px",
+          margin: "20px auto",
+        }}
+      >
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            marginBottom: "16px",
+          }}
+        >
+          Create a New Post
         </Typography>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
@@ -43,18 +78,21 @@ const AddRecipes = () => {
               required
             />
             <TextField
-              label="Recipe Details"
+              label="Recipe Description"
               variant="outlined"
               value={recipeDetail}
               onChange={handleRecipeDetailChange}
               required
+              multiline
+              rows={4}
             />
+            <ImageDropzone value={image} onChange={setImage} />
             <Button variant="contained" type="submit">
-              Add Recipe
+              Post Now
             </Button>
           </Stack>
         </form>
-      </div>
+      </FormBox>
     </>
   );
 };

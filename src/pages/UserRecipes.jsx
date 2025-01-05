@@ -1,9 +1,8 @@
 import { Navbar } from "../components/navbar";
-import Box from "@mui/material/Box";
 import PostCard from "../components/PostCard";
-import Stack from "@mui/material/Stack";
 import { useRecipes } from "../contexts/ReceipesContext";
 import { useUsers } from "../contexts/UsersContext";
+import { StyledBox } from "../styles/styledComponents";
 
 const UserRecipes = () => {
   const { recipes } = useRecipes();
@@ -12,24 +11,16 @@ const UserRecipes = () => {
   const currentUserRecipes = recipes.filter(
     (recipe) => recipe.userId === user.id
   );
-  console.log(currentUserRecipes);
+
   return (
-    <div>
+    <>
       <Navbar />
-      <Box>
-        <Stack
-          direction="row"
-          spacing={2}
-          useFlexGap
-          flexWrap="wrap"
-          justifyContent="center"
-        >
-          {currentUserRecipes.map((userRecipe) => (
-            <PostCard recipe={userRecipe} key={userRecipe.id} />
-          ))}
-        </Stack>
-      </Box>
-    </div>
+      <StyledBox>
+        {currentUserRecipes.map((userRecipe) => (
+          <PostCard recipe={userRecipe} key={userRecipe.id} />
+        ))}
+      </StyledBox>
+    </>
   );
 };
 

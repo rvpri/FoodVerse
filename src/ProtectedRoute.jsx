@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useUsers();
-  console.log(isAuthenticated);
   const navigate = useNavigate();
 
   useEffect(

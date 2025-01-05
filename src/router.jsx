@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import UserRecipes from "./pages/UserRecipes";
 import AddReceipes from "./pages/AddReceipes";
 import ProtectedRoute from "./ProtectedRoute";
-import Recipe from "./pages/Recipe";
+import RecipeDetail from "./pages/RecipeDetail";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +38,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/recipe/:id",
-    element: <Recipe />,
+    element: <RecipeDetail />,
   },
 ]);
