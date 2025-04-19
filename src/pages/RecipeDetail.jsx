@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecipes } from "../contexts/ReceipesContext";
 import { Typography, Box, Stack, Container, Divider } from "@mui/material";
-import FoodImg from "../assets/food.jpg";
 import { Navbar } from "../components/navbar";
 import axios from "axios";
 
@@ -41,7 +40,7 @@ const RecipeDetail = () => {
             <Box sx={{ textAlign: "center" }}>
               <Typography variant="h4">{recipe.title}</Typography>
               <Typography variant="h6" color="text.primary">
-                By: {userName || "Unknown"}
+                Shared By: {userName || "Unknown"}
               </Typography>
             </Box>
             <Box
@@ -52,11 +51,12 @@ const RecipeDetail = () => {
               }}
             >
               <img
-                src={recipe.image || FoodImg}
+                src={recipe.image}
                 alt={recipe.title}
                 style={{
-                  maxWidth: 500,
-                  height: "auto",
+                  maxWidth: "100%",
+                  height: 300,
+                  objectFit: "cover",
                   borderRadius: 2,
                 }}
               />

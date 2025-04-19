@@ -1,40 +1,26 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { Typography } from "@mui/material";
-import { StyledDropzone } from "../styles/styledComponents";
+import { Typography, Box } from "@mui/material";
+import { StyledDropzone, ErrorTypography } from "../styles/styledComponents";
 
-const ImageDropzone = ({ value, onChange }) => {
-  const [preview, setPreview] = useState(value || null);
-  const [uploadError, setUploadError] = useState(null);
+const ImageDropzone = ({ onChange }) => {
+  const [preview, setPreview] = useState(null);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    return () => {
-      if (preview && preview.startsWith("blob:")) {
-        URL.revokeObjectURL(preview);
-      }
-    };
-  }, [preview]);
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const validTypes = ["image/jpeg", "image/png"];
 
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      if (acceptedFiles.length > 0) {
-        const file = acceptedFiles[0];
-
-        const validMimeTypes = ["image/jpeg", "image/png"];
-        if (validMimeTypes.includes(file.type)) {
-          const blobURL = URL.createObjectURL(file);
-          setPreview(blobURL);
-          onChange(file);
-          setUploadError(null);
-        } else {
-          setUploadError(
-            "Invalid file type. Please upload an image (JPEG, PNG only)."
-          );
-        }
-      }
-    },
-    [onChange]
-  );
+    if (file && validTypes.includes(file.type)) {
+      setPreview(URL.createObjectURL(file));
+      setError(null);
+      onChange(file);
+    } else {
+      setError("Invalid file type. Only JPEG or PNG allowed.");
+      setPreview(null);
+      onChange(null);
+    }
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -45,17 +31,29 @@ const ImageDropzone = ({ value, onChange }) => {
     },
   });
 
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
   return (
     <StyledDropzone {...getRootProps()}>
       <input {...getInputProps()} />
-      {preview ? (
-        <img src={preview} alt="Preview" />
-      ) : (
-        <Typography variant="body1">
-          Drag and drop or click to select an image (JPEG, PNG only)
-        </Typography>
-      )}
-      {uploadError && <Typography variant="error">{uploadError}</Typography>}
+      <Box textAlign="center">
+        {preview ? (
+          <img
+            src={preview}
+            alt="Preview"
+            style={{ maxWidth: "100%", height: "auto", borderRadius: "8px" }}
+          />
+        ) : (
+          <Typography variant="body1" color="textSecondary">
+            Drag and drop or click to select an image (JPEG, PNG)
+          </Typography>
+        )}
+        {error && <ErrorTypography variant="body2">{error}</ErrorTypography>}
+      </Box>
     </StyledDropzone>
   );
 };

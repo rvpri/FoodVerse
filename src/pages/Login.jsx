@@ -78,7 +78,7 @@ const Login = () => {
               type="password"
               size="small"
               name="password"
-              autocomplete="current-password"
+              autoComplete="current-password"
               value={formData.password}
               onChange={handleChange}
               error={!!errors.password}

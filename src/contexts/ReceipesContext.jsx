@@ -1,28 +1,31 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useUsers } from "./UsersContext";
+
 export const ReceipesContext = createContext();
 
 function ReceipesProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useUsers();
 
   useEffect(() => {
-    const fetchReciepes = async () => {
+    const fetchRecipes = async () => {
       try {
         const response = await fetch("http://localhost:8001/posts");
-
         if (!response.ok) {
-          throw new Error("Something went wrong with fetching movies");
+          throw new Error("Something went wrong with fetching recipes");
         }
 
         const data = await response.json();
         setRecipes(data);
       } catch (error) {
         console.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchReciepes();
+    fetchRecipes();
   }, []);
 
   const handleAddRecipe = async (title, recipeDetail, image) => {
@@ -33,31 +36,34 @@ function ReceipesProvider({ children }) {
       userId: user.id,
     };
 
-    async function addNewRecipe() {
-      try {
-        const response = await fetch("http://localhost:8001/posts", {
-          method: "POST",
-          body: JSON.stringify(newRecipe),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const updatedRecipes = await response.json();
-        setRecipes((prevRecipes) => [...prevRecipes, updatedRecipes]);
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-        console.log(response.ok);
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
+    try {
+      const response = await fetch("http://localhost:8001/posts", {
+        method: "POST",
+        body: JSON.stringify(newRecipe),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    addNewRecipe();
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const updatedRecipe = await response.json();
+      setRecipes((prevRecipes) => [...prevRecipes, updatedRecipe]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
-    <ReceipesContext.Provider value={{ recipes, handleAddRecipe }}>
+    <ReceipesContext.Provider
+      value={{
+        recipes,
+        handleAddRecipe,
+        isLoading,
+      }}
+    >
       {children}
     </ReceipesContext.Provider>
   );

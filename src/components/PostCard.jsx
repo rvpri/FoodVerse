@@ -6,8 +6,8 @@ import {
   Stack,
   Box,
 } from "@mui/material";
-import FoodImg from "../assets/food.jpg";
 import { useNavigate } from "react-router-dom";
+import { useRecipes } from "../contexts/ReceipesContext"; // Assuming you're using the context
 
 const PostCard = ({ recipe }) => {
   const { id, title, image } = recipe;
@@ -18,13 +18,8 @@ const PostCard = ({ recipe }) => {
   };
 
   return (
-    <Card sx={{ width: 300 }} onClick={handleClick}>
-      <CardMedia
-        component="img"
-        height="200"
-        image={image || FoodImg}
-        alt="Paella dish"
-      />
+    <Card sx={{ width: 400 }} onClick={handleClick}>
+      <CardMedia component="img" height="300" image={image} alt="Paella dish" />
       <Stack direction="row" justifyContent="space-between">
         <Box>
           <CardContent>

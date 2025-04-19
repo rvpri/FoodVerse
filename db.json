@@ -1,0 +1,73 @@
+{
+  "posts": [
+    {
+      "id": "4",
+      "title": "Vegetable Biryani",
+      "recipeDetail": "A flavorful rice dish with a variety of mixed vegetables, cooked with aromatic spices and layered to perfection. A wholesome and satisfying meal.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744540425/drsxfm1vqvvpup44hpkq.jpg",
+      "userId": "1"
+    },
+    {
+      "id": "3769",
+      "title": "Sushi",
+      "recipeDetail": "Fresh vinegared rice paired with seafood or vegetables, all wrapped in seaweed for a perfect bite-sized treat.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744733447/y1of6zcaud8e0h0eba3r.jpg",
+      "userId": "3"
+    },
+    {
+      "id": "c816",
+      "title": "Fresh Salad",
+      "recipeDetail": "A refreshing combination of crisp, fresh vegetables, perfect for a light meal or side dish.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744734085/ed5mcqd73ydei66qzthj.jpg",
+      "userId": "2"
+    },
+    {
+      "id": "0e77",
+      "title": "Ramen",
+      "recipeDetail": "A rich and savory noodle soup, typically served with a flavorful broth, meats, and vegetables.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744735996/xsvjyyb3i3fr1qtanp59.jpg",
+      "userId": "2"
+    },
+    {
+      "id": "7d51",
+      "title": "Pancake",
+      "recipeDetail": "Fluffy and golden pancakes, often served with syrup, butter, or fresh fruit for a classic breakfast.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744736573/jzrgkde096a8d60zgpaa.jpg",
+      "userId": "3"
+    },
+    {
+      "id": "5b46",
+      "title": "Bibimbap",
+      "recipeDetail": "A vibrant Korean rice bowl topped with assorted vegetables, a fried egg, and spicy gochujang sauce for a perfect balance of flavors.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744736903/i0la5hvsb3u2tlc1v5oq.jpg",
+      "userId": "1"
+    },
+    {
+      "id": "10b5",
+      "title": "Tofu Salad",
+      "recipeDetail": "A light and nutritious salad featuring cubes of tofu and a tangy dressing for a satisfying, healthy meal.",
+      "image": "https://res.cloudinary.com/dkkjui93c/image/upload/v1744820308/n48ggsi6jzwktf2yicxx.jpg",
+      "userId": "1"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "userName": "sam",
+      "email": "sam@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2",
+      "userName": "rose",
+      "email": "rose@gmail.com",
+      "password": "123abc"
+    },
+    {
+      "id": "3",
+      "userName": "john",
+      "email": "john@gmail.com",
+      "password": "abc123"
+    }
+  ]
+}

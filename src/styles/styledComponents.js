@@ -1,6 +1,5 @@
 import { styled } from "@mui/system";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const StyledBox = styled(Box)`
   display: flex;
@@ -9,7 +8,6 @@ export const StyledBox = styled(Box)`
   flex-wrap: wrap;
   margin: 20px auto;
   justify-content: center;
-  background-color: #f5f5f5;
 `;
 
 export const CenteredTypography = styled(Typography)`
@@ -31,7 +29,7 @@ export const StyledDropzone = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 402px;
+  height: 500px;
   position: relative;
   overflow: hidden;
 
@@ -44,4 +42,16 @@ export const StyledDropzone = styled(Box)`
     left: 0;
     border-radius: 5px;
   }
+`;
+
+export const ErrorTypography = styled(Typography)`
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #f44336;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f8d7da;
+  color: #721c24;
+  text-align: center;
 `;
